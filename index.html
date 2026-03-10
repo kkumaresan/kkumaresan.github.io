@@ -1,4 +1,774 @@
----
-layout: home
-# Index page
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Karuppuswamy Kumaresan | Principal Consultant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Principal Consultant – Enterprise Cloud & AI Platforms. Architecture, Product Strategy, UX Systems, and Scalable Infrastructure Advisory.">
+
+    <style>
+        :root {
+            --bg:       #F7F6F2;
+            --surface:  #FFFFFF;
+            --text:     #1A1916;
+            --muted:    #6E6C65;
+            --faint:    #B0AEA7;
+            --border:   #E4E2DC;
+            --accent:   #C0392B;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.75;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Grain overlay */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            opacity: 0.028;
+        }
+
+        /* ── Layout ──────────────────────────────── */
+        .container {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 40px 140px;
+        }
+
+        /* ── Top bar ──────────────────────────────── */
+        .topbar {
+            border-bottom: 1px solid var(--border);
+            padding: 22px 0;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .topbar-brand {
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--faint);
+            font-weight: 500;
+        }
+
+        .topbar-tag {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* ── Header ──────────────────────────────── */
+        .header {
+            padding: 80px 0 0;
+            border-bottom: 1px solid var(--border);
+            opacity: 0;
+            animation: riseIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+        }
+
+        .header-inner {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 0;
+            align-items: start;
+        }
+
+        .header-text {
+            padding-bottom: 64px;
+            padding-right: 56px;
+        }
+
+        .header-photo {
+            align-self: stretch;
+            overflow: hidden;
+            border-left: 1px solid var(--border);
+        }
+
+        .header-photo img {
+            width: 100%;
+            height: 100%;
+            min-height: 320px;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+            filter: grayscale(18%) contrast(1.04);
+            transition: filter 0.4s;
+        }
+
+        .header-photo img:hover {
+            filter: grayscale(0%) contrast(1);
+        }
+
+        .name {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: clamp(38px, 5.5vw, 62px);
+            font-weight: normal;
+            letter-spacing: -1.5px;
+            line-height: 1.05;
+            margin: 0 0 32px;
+            color: var(--text);
+        }
+
+        .header-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-top: 1px solid var(--border);
+            margin-top: 40px;
+        }
+
+        .meta-cell {
+            padding: 20px 28px 20px 0;
+            border-right: 1px solid var(--border);
+        }
+
+        .meta-cell:nth-child(even) {
+            padding-left: 32px;
+            padding-right: 0;
+        }
+
+        .meta-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+        .meta-label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--faint);
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .meta-value {
+            font-size: 15px;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        .meta-value strong {
+            font-weight: 600;
+        }
+
+        /* ── Sections ──────────────────────────────── */
+        .section {
+            padding: 72px 0 0;
+            opacity: 0;
+            animation: riseIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .section:nth-child(2)  { animation-delay: 0.15s; }
+        .section:nth-child(3)  { animation-delay: 0.22s; }
+        .section:nth-child(4)  { animation-delay: 0.28s; }
+        .section:nth-child(5)  { animation-delay: 0.33s; }
+        .section:nth-child(6)  { animation-delay: 0.38s; }
+        .section:nth-child(7)  { animation-delay: 0.43s; }
+        .section:nth-child(8)  { animation-delay: 0.48s; }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-num {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--faint);
+            font-variant-numeric: tabular-nums;
+            flex-shrink: 0;
+        }
+
+        h2 {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: clamp(24px, 3.5vw, 34px);
+            font-weight: normal;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin: 0;
+            color: var(--text);
+        }
+
+        /* ── Body text ──────────────────────────────── */
+        p {
+            font-size: 17px;
+            margin: 0 0 20px;
+            color: var(--text);
+        }
+
+        p:last-child { margin-bottom: 0; }
+
+        strong { font-weight: 600; }
+
+        /* ── Lists ──────────────────────────────── */
+        ul.clean {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 24px;
+        }
+
+        ul.clean li {
+            font-size: 16px;
+            padding: 10px 0 10px 20px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            color: var(--text);
+        }
+
+        ul.clean li:first-child { border-top: 1px solid var(--border); }
+
+        ul.clean li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 1px;
+            background: var(--accent);
+        }
+
+        ul.dot {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 16px;
+        }
+
+        ul.dot li {
+            font-size: 15px;
+            padding: 5px 0 5px 18px;
+            position: relative;
+            color: var(--muted);
+        }
+
+        ul.dot li::before {
+            content: '·';
+            position: absolute;
+            left: 4px;
+            color: var(--faint);
+            font-size: 18px;
+            line-height: 1.4;
+        }
+
+        /* ── Subsections ──────────────────────────────── */
+        .subsection {
+            margin-top: 52px;
+        }
+
+        .subsection:first-child { margin-top: 0; }
+
+        h3.sub {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin: 0 0 20px;
+        }
+
+        /* ── Outcome metrics ──────────────────────────────── */
+        .outcomes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+            margin: 32px 0;
+            background: var(--border);
+        }
+
+        .outcome {
+            background: var(--surface);
+            padding: 28px 24px;
+            transition: background 0.2s;
+        }
+
+        .outcome:hover { background: var(--bg); }
+
+        .outcome-num {
+            font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+            font-size: 48px;
+            line-height: 1;
+            color: var(--accent);
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+        }
+
+        .outcome-desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* ── Capabilities grid ──────────────────────────────── */
+        .cap-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+            background: var(--border);
+            margin-top: 28px;
+        }
+
+        .cap-group {
+            background: var(--surface);
+            padding: 28px;
+        }
+
+        .cap-group-title {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text);
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* ── Leadership cards ──────────────────────────────── */
+        .leadership-card {
+            border: 1px solid var(--border);
+            background: var(--surface);
+            margin-bottom: 12px;
+            padding: 32px;
+            transition: box-shadow 0.2s;
+        }
+
+        .leadership-card:hover {
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+        }
+
+        .lc-org {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .lc-role {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 20px;
+            font-weight: normal;
+            margin: 0 0 20px;
+            color: var(--text);
+        }
+
+        /* ── Pull quote ──────────────────────────────── */
+        .pull-quote {
+            border-left: 3px solid var(--accent);
+            padding: 4px 0 4px 28px;
+            margin: 36px 0;
+        }
+
+        .pull-quote p {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 21px;
+            font-style: italic;
+            line-height: 1.5;
+            color: var(--text);
+            margin: 0;
+        }
+
+        /* ── UX philosophy ──────────────────────────────── */
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            border: 1px solid var(--border);
+            background: var(--border);
+            margin-top: 24px;
+        }
+
+        .philosophy-item {
+            background: var(--surface);
+            padding: 20px 24px;
+            font-size: 15px;
+            color: var(--muted);
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .philosophy-item:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .philosophy-item::before {
+            content: '→';
+            margin-right: 10px;
+            color: var(--faint);
+            font-size: 13px;
+        }
+
+        /* ── Divider ──────────────────────────────── */
+        .rule {
+            height: 1px;
+            background: var(--border);
+            margin: 0;
+        }
+
+        /* ── Footer ──────────────────────────────── */
+        .footer {
+            padding: 72px 0 0;
+            opacity: 0;
+            animation: riseIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+        }
+
+        .footer-cta {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: clamp(26px, 4vw, 40px);
+            font-weight: normal;
+            letter-spacing: -0.8px;
+            line-height: 1.2;
+            margin: 0 0 28px;
+            color: var(--text);
+        }
+
+        .footer-cta em {
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        .footer-body {
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 620px;
+            line-height: 1.75;
+        }
+
+        /* ── Animation ──────────────────────────────── */
+        @keyframes riseIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0);    }
+        }
+
+        /* ── Responsive ──────────────────────────────── */
+        @media (max-width: 700px) {
+            .container { padding: 0 20px 100px; }
+            .header { padding: 48px 0 0; }
+            .header-inner { grid-template-columns: 1fr; }
+            .header-text { padding-right: 0; padding-bottom: 40px; }
+            .header-photo { border-left: none; border-top: 1px solid var(--border); }
+            .header-photo img { min-height: 260px; object-position: center 8%; }
+            .header-meta { grid-template-columns: 1fr; }
+            .meta-cell { border-right: none; padding-left: 0; }
+            .outcomes { grid-template-columns: 1fr; }
+            .cap-grid { grid-template-columns: 1fr; }
+            .philosophy-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Top bar -->
+    <div class="topbar">
+        <span class="topbar-brand">kkumaresan.github.io</span>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+        <div class="header-text">
+        <h1 class="name">Karuppuswamy<br>Kumaresan</h1>
+
+        <div class="header-meta">
+            <div class="meta-cell">
+                <span class="meta-label">Role</span>
+                <div class="meta-value">
+                    <strong>Principal Consultant</strong><br>
+                    Enterprise Cloud &amp; AI Platforms
+                </div>
+            </div>
+            <div class="meta-cell">
+                <span class="meta-label">Specialisations</span>
+                <div class="meta-value">
+                    Product Architect · UX Systems Strategist<br>
+                    Scalable Infrastructure Advisor
+                </div>
+            </div>
+            <div class="meta-cell" style="border-right:none;">
+                <span class="meta-label">Base</span>
+                <div class="meta-value">Chennai, India</div>
+            </div>
+            <div class="meta-cell" style="border-right:none;">
+                <span class="meta-label">Experience</span>
+                <div class="meta-value">22+ years designing, scaling &amp; modernising digital systems</div>
+            </div>
+            <div class="meta-cell" style="grid-column:1/-1; border-right:none; border-top:1px solid var(--border);">
+                <span class="meta-label">Contact</span>
+                <div class="meta-value">
+                    <a href="mailto:im@kkumaresan.com" style="color:var(--text); text-decoration:none; border-bottom:1px solid var(--accent); padding-bottom:1px;">im@kkumaresan.com</a>
+                </div>
+            </div>
+        </div>
+        </div><!-- /header-text -->
+        <div class="header-photo">
+            <img src="profile.jpg" alt="Karuppuswamy Kumaresan">
+        </div>
+        </div><!-- /header-inner -->
+    </header>
+
+    <!-- 01 · Intro -->
+    <section class="section">
+        <div class="section-header">
+            <span class="section-num">01</span>
+            <h2>I Design Systems That Outlive Their First Version.</h2>
+        </div>
+
+        <p>Enterprise systems rarely fail because of weak technology. They fail because architecture, product thinking, cost discipline, and user experience are disconnected.</p>
+
+        <div class="pull-quote">
+            <p>I help organisations design <strong>cloud-native, AI-ready, financially optimised platforms</strong> that scale with structural clarity — not accumulated complexity.</p>
+        </div>
+
+        <p>My work operates at the intersection of:</p>
+
+        <ul class="clean">
+            <li>Enterprise Cloud Architecture</li>
+            <li>Product &amp; Platform Strategy</li>
+            <li>DevOps &amp; Automation Engineering</li>
+            <li>AI-Augmented Systems</li>
+            <li>UI/UX Architecture &amp; Experience Systems</li>
+        </ul>
+
+        <p style="color:var(--muted); font-size:15px; margin-top:12px;">I work at the system level — not the feature level.</p>
+    </section>
+
+    <!-- 02 · Consulting Focus -->
+    <section class="section">
+        <div class="section-header">
+            <span class="section-num">02</span>
+            <h2>Consulting Focus</h2>
+        </div>
+
+        <!-- Cloud Architecture -->
+        <div class="subsection">
+            <h3 class="sub">Cloud Architecture &amp; Platform Modernisation</h3>
+            <p>When cloud costs rise and delivery velocity slows, architecture is usually the root cause.</p>
+            <p>I help organisations:</p>
+            <ul class="clean">
+                <li>Re-architect legacy platforms into microservices ecosystems</li>
+                <li>Design Kubernetes-native CI/CD automation frameworks</li>
+                <li>Implement FinOps and cloud cost governance models</li>
+                <li>Improve observability, resilience, and compliance posture</li>
+                <li>Align technical architecture with long-term product strategy</li>
+            </ul>
+
+            <div class="outcomes">
+                <div class="outcome">
+                    <div class="outcome-num">27%</div>
+                    <div class="outcome-desc">Reduction in Azure cloud spend</div>
+                </div>
+                <div class="outcome">
+                    <div class="outcome-num">20%</div>
+                    <div class="outcome-desc">Infrastructure asset cost reduction via re-architecture</div>
+                </div>
+                <div class="outcome">
+                    <div class="outcome-num">&lt;1yr</div>
+                    <div class="outcome-desc">Full migration of a 15-year legacy system to Azure</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Systems -->
+        <div class="subsection">
+            <h3 class="sub">AI-Enabled Enterprise Systems</h3>
+            <p>AI should be infrastructure — not decoration.</p>
+            <p>My current work explores:</p>
+            <ul class="clean">
+                <li>Architecture Assessment Automation Platforms</li>
+                <li>LLM-assisted engineering workflows (enterprise-safe, self-hosted)</li>
+                <li>AI-driven manufacturing and operational analytics</li>
+                <li>Optimisation models combining operational, environmental, and performance signals</li>
+                <li>AI-augmented DevOps &amp; system diagnostics</li>
+            </ul>
+            <p style="color:var(--muted); font-size:15px;">I am particularly focused on reducing engineering cognitive load through intelligent internal systems.</p>
+        </div>
+
+        <!-- Product Strategy -->
+        <div class="subsection">
+            <h3 class="sub">Product &amp; Platform Strategy</h3>
+            <p>Technology must compound strategic advantage.</p>
+            <p>I work with leadership teams to:</p>
+            <ul class="clean">
+                <li>Align architecture with product roadmap</li>
+                <li>Prevent technical debt from becoming structural drag</li>
+                <li>Translate executive vision into scalable platform design</li>
+                <li>Establish architecture governance &amp; review frameworks</li>
+                <li>Strengthen compliance and security alignment without slowing delivery</li>
+            </ul>
+            <p style="color:var(--muted); font-size:15px;">My advisory direction is evolving toward structured, productised B2B architecture intelligence systems.</p>
+        </div>
+
+        <!-- UX -->
+        <div class="subsection">
+            <h3 class="sub">UI &amp; UX Systems Design</h3>
+            <p>My foundation is in UI/UX — long before it became a mainstream specialisation.</p>
+            <p>I have:</p>
+            <ul class="clean">
+                <li>Led award-winning UX initiatives</li>
+                <li>Designed scalable design languages &amp; component systems</li>
+                <li>Built enterprise-grade front-end architectures (React, React Native)</li>
+                <li>Delivered secure blockchain wallet interfaces</li>
+                <li>Designed complex SaaS dashboards and collaboration platforms</li>
+                <li>Integrated research-driven usability improvements into product lifecycle</li>
+            </ul>
+
+            <p style="margin-top:28px; margin-bottom:12px; font-size:15px; color:var(--muted);">My UX philosophy:</p>
+            <div class="philosophy-grid">
+                <div class="philosophy-item">Architect information, not just interfaces</div>
+                <div class="philosophy-item">Reduce friction before adding features</div>
+                <div class="philosophy-item">Design for cognition, not aesthetics</div>
+                <div class="philosophy-item">Build reusable systems, not isolated screens</div>
+                <div class="philosophy-item" style="grid-column:1/-1;">Align user journeys with measurable business outcomes</div>
+            </div>
+
+            <div class="pull-quote" style="margin-top:32px;">
+                <p>A technically scalable system that fails experientially is still broken.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 03 · Capabilities -->
+    <section class="section">
+        <div class="section-header">
+            <span class="section-num">03</span>
+            <h2>Technical &amp; Strategic Capabilities</h2>
+        </div>
+
+        <div class="cap-grid">
+            <div class="cap-group">
+                <div class="cap-group-title">Cloud &amp; Platform</div>
+                <ul class="dot">
+                    <li>Azure, AWS</li>
+                    <li>Kubernetes, Docker, Helm</li>
+                    <li>CI/CD Automation &amp; DevOps</li>
+                    <li>Cloud Migration &amp; Modernisation</li>
+                    <li>Observability Systems</li>
+                </ul>
+            </div>
+            <div class="cap-group">
+                <div class="cap-group-title">Application &amp; Interface</div>
+                <ul class="dot">
+                    <li>MERN Stack, TypeScript, Next.js</li>
+                    <li>React, React Native</li>
+                    <li>NodeJS</li>
+                    <li>Blockchain (Ethereum, Web3JS)</li>
+                    <li>API-First &amp; Microservices</li>
+                </ul>
+            </div>
+            <div class="cap-group">
+                <div class="cap-group-title">Strategic Leadership</div>
+                <ul class="dot">
+                    <li>Product Lifecycle Governance</li>
+                    <li>Architecture Review Frameworks</li>
+                    <li>Cloud Cost Intelligence &amp; FinOps</li>
+                    <li>Engineering Process Optimisation</li>
+                    <li>Cross-Geo Technical Leadership</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 04 · Why Different -->
+    <section class="section">
+        <div class="section-header">
+            <span class="section-num">04</span>
+            <h2>Why I Am Different</h2>
+        </div>
+
+        <p>Most consultants specialise in either architecture, product, or UX. I integrate all three.</p>
+
+        <ul class="clean">
+            <li>Founded and scaled a 50+ member digital technology company</li>
+            <li>Led enterprise cloud transformation initiatives</li>
+            <li>Delivered multiple SaaS products end-to-end</li>
+            <li>Designed UI systems and technical architectures personally</li>
+            <li>Operated within both startup velocity and enterprise governance structures</li>
+        </ul>
+
+        <p style="margin-top:24px;">This allows me to diagnose systemic issues quickly and design solutions that are technically sound, strategically aligned, and experientially coherent.</p>
+        <p style="color:var(--muted); font-size:15px;">My long-term direction is toward building scalable architecture intelligence platforms — reducing dependency on reactive consulting and enabling structured, automated advisory systems.</p>
+    </section>
+
+    <!-- 05 · Leadership -->
+    <section class="section">
+        <div class="section-header">
+            <span class="section-num">05</span>
+            <h2>Leadership Snapshot</h2>
+        </div>
+
+        <div class="leadership-card">
+            <div class="lc-org">NielsenIQ – BASES Division</div>
+            <div class="lc-role">Principal Cloud Architect</div>
+            <ul class="dot">
+                <li>Headed cloud ops, DevOps automation &amp; platform engineering</li>
+                <li>Led large-scale microservices re-architecture</li>
+                <li>Reduced Azure cloud spend by 27%</li>
+                <li>Ensured governance, security &amp; compliance alignment</li>
+                <li>Delivered modernisation across global stakeholder environments</li>
+            </ul>
+        </div>
+
+        <div class="leadership-card">
+            <div class="lc-org">Future Focus Infotech</div>
+            <div class="lc-role">Product Leadership</div>
+            <ul class="dot">
+                <li>Delivered 5 enterprise SaaS products</li>
+                <li>Established DevOps-first engineering culture</li>
+                <li>Achieved 40% AWS cost optimisation</li>
+                <li>Led 20+ cross-functional engineering teams</li>
+            </ul>
+        </div>
+
+        <p style="color:var(--muted); font-size:15px; margin-top:20px;">Earlier career includes delivering 200+ digital products across global markets and building design-led technology organisations from the ground up.</p>
+    </section>
+
+    <!-- 06 · Personal Note -->
+    <section class="section">
+        <div class="section-header">
+            <span class="section-num">06</span>
+            <h2>A Personal Note</h2>
+        </div>
+
+        <p>I am deeply curious about how systems behave — technical systems, organisational systems, and human systems.</p>
+
+        <div class="pull-quote">
+            <p>Durable platforms emerge when engineering rigour, product clarity, and human-centred design are treated as one discipline — not separate departments.</p>
+        </div>
+
+        <p style="color:var(--muted); font-size:16px;">Outside structured engagements, I actively explore AI-native tooling, architecture automation, and scalable advisory models that compound over time.</p>
+    </section>
+
+    <div class="rule"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-cta">Let's Architect Clarity<br><em>Before Scaling Complexity.</em></p>
+        <p class="footer-body">If you are modernising a legacy platform, designing an AI-enabled enterprise system, or restructuring engineering for long-term resilience — I can help you design the right system before scaling the wrong one.</p>
+    </footer>
+
+</div>
+
+</body>
+</html>
