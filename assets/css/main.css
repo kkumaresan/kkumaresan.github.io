@@ -1,0 +1,803 @@
+/* ═══════════════════════════════════════════════════════════════
+   kkumaresan.com — v2 "Systems Dossier"
+   A technical specification sheet rendered in near-black.
+   Structure is exposed, not decorated: hairline rules, a metadata
+   rail, plotted section numerals, statistics set as instrument
+   readouts. Monochrome-dominant — white is the accent.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tokens ─────────────────────────────────────────────────── */
+:root {
+    /* Ground */
+    --bg:          #000000;
+    --surface:     #0A0A0A;
+    --surface-2:   #101010;
+
+    /* Structure */
+    --line:        #1D1D1D;   /* hairline — default rule        */
+    --line-2:      #2A2A2A;   /* emphasised rule / card edge    */
+
+    /* Ink */
+    --text:        #EDEDED;
+    --muted:       #A1A1A1;   /* 8.5:1 on black                 */
+    --faint:       #7A7A7A;   /* 4.8:1 — passes AA at 11px      */
+
+    /* Interactive — the only chromatic note in the system */
+    --link:        #3D8BFF;
+    --link-dim:    #1F6FEB;
+
+    /* Type */
+    --display: "Playfair Display", Georgia, "Times New Roman", serif;
+    --sans:    "Geist", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+    --mono:    "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+    /* Rhythm */
+    --rail:    104px;   /* metadata gutter width */
+    --gutter:  48px;
+    --measure: 66ch;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* Playfair is a wide face, so display lines break more often than they did
+   with a condensed serif. Balance them rather than shrinking the type. */
+.hero-name,
+.section h2,
+.page-title,
+.article-title,
+.post-title,
+.footer-cta,
+.pull-quote p,
+.prose h2 { text-wrap: balance; }
+
+.section p, .prose p, .page-lede, .footer-text { text-wrap: pretty; }
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    position: relative;   /* containing block for the glow layer */
+    overflow-x: hidden;   /* the glow is inset-anchored; belt and braces */
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16.5px;
+    line-height: 1.75;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-variant-ligatures: common-ligatures;
+}
+
+/* Atmosphere: a single cold light source above the sheet, plus a
+   whisper of noise so the falloff never bands on wide gamut panels.
+   The glow is anchored to the top of the *document*, not the viewport — a
+   light source that trails you down the page reads wrong, and a fixed
+   full-width gradient forces a compositing layer that ghosts stale tiles
+   in tall captures. Absolute positioning avoids both. */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 780px;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(
+        ellipse 120% 100% at 50% -20%,
+        rgba(255, 255, 255, 0.055) 0%,
+        rgba(255, 255, 255, 0.018) 38%,
+        transparent 72%
+    );
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.022;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── The sheet ──────────────────────────────────────────────── */
+.sheet {
+    position: relative;
+    z-index: 1;
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 var(--gutter) 160px;
+    border-left: 1px solid var(--line);
+    border-right: 1px solid var(--line);
+    min-height: 100vh;
+}
+
+/* ── Selection & focus ──────────────────────────────────────── */
+::selection { background: var(--text); color: var(--bg); }
+
+a { color: inherit; }
+
+:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 3px;
+    border-radius: 1px;
+}
+
+/* ── Shared atoms ───────────────────────────────────────────── */
+.label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--faint);
+    display: block;
+}
+
+.link-underline {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid var(--line-2);
+    padding-bottom: 2px;
+    transition: border-color 0.25s ease, color 0.25s ease;
+}
+.link-underline:hover { color: #FFF; border-bottom-color: var(--link); }
+
+/* ── Topbar ─────────────────────────────────────────────────── */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.topbar-brand {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+.topbar-brand:hover { color: var(--text); }
+
+.topbar-nav {
+    display: flex;
+    gap: 26px;
+    align-items: center;
+}
+
+.topbar-nav a {
+    color: var(--faint);
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+.topbar-nav a:hover,
+.topbar-nav a[aria-current="page"] { color: var(--text); }
+
+/* ── Hero ───────────────────────────────────────────────────── */
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 296px;
+    border-bottom: 1px solid var(--line);
+}
+
+.hero-text { padding: 88px 56px 56px 0; }
+
+.hero-name {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(54px, 8.6vw, 106px);
+    line-height: 0.94;
+    letter-spacing: -0.021em;
+    margin: 0 0 40px;
+    color: #FFF;
+}
+
+/* Patronymic sits back; the name the practice is known by carries.
+   Upright, not italic — Playfair's italic is too decorative at this size. */
+.hero-name-lead {
+    display: block;
+    color: var(--muted);
+    font-style: normal;
+    font-size: 0.36em;
+    letter-spacing: 0.006em;
+    margin-bottom: 0.22em;
+}
+.hero-name-main { display: block; color: #FFF; }
+
+.hero-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line);
+}
+
+.meta-cell {
+    padding: 20px 28px 20px 0;
+    border-bottom: 1px solid var(--line);
+}
+.meta-cell:nth-child(odd) {
+    border-right: 1px solid var(--line);
+    padding-right: 28px;
+}
+.meta-cell:nth-child(even) { padding-left: 28px; }
+
+/* Doubled class so this beats the (0,2,0) nth-child rules above. */
+.meta-cell.meta-cell--wide {
+    grid-column: 1 / -1;
+    border-right: none;
+    border-bottom: none;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.meta-value {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin-top: 9px;
+}
+.meta-value strong { color: var(--text); font-weight: 500; }
+
+/* Portrait sits in its own bay, divided by a hairline. */
+.hero-photo {
+    border-left: 1px solid var(--line);
+    overflow: hidden;
+    align-self: stretch;
+    position: relative;
+    background: var(--surface);
+}
+
+.hero-photo img {
+    width: 100%;
+    height: 100%;
+    min-height: 380px;
+    object-fit: cover;
+    object-position: center 18%;
+    display: block;
+    filter: grayscale(100%) contrast(1.08) brightness(0.82);
+    transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hero-photo:hover img {
+    filter: grayscale(28%) contrast(1.02) brightness(0.95);
+}
+
+/* ── Sections: rail + body ──────────────────────────────────── */
+.section {
+    display: grid;
+    grid-template-columns: var(--rail) 1fr;
+    gap: 0 var(--gutter);
+    padding: 76px 0;
+    border-bottom: 1px solid var(--line);
+}
+
+.section-rail { position: relative; }
+
+/* The plotted numeral — the page's structural signature. */
+.section-num {
+    position: sticky;
+    top: 40px;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--faint);
+    display: block;
+}
+.section-num::after {
+    content: '';
+    display: block;
+    width: 28px;
+    height: 1px;
+    background: var(--line-2);
+    margin-top: 14px;
+}
+
+.section-body { max-width: var(--measure); min-width: 0; }
+
+.section h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(27px, 3.5vw, 40px);
+    line-height: 1.14;
+    letter-spacing: -0.014em;
+    color: #FFF;
+    margin: -8px 0 28px;
+}
+
+.section p { margin: 0 0 20px; color: var(--muted); }
+.section p strong { color: var(--text); font-weight: 500; }
+
+.note {
+    font-size: 14.5px;
+    color: var(--faint);
+    font-style: italic;
+}
+
+/* ── Subsections ────────────────────────────────────────────── */
+.subsection {
+    padding-top: 44px;
+    margin-top: 44px;
+    border-top: 1px solid var(--line);
+}
+.subsection:first-of-type { padding-top: 0; margin-top: 36px; border-top: none; }
+
+.sub {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin: 0 0 18px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+}
+.sub::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    flex: none;
+    background: var(--text);
+    transform: translateY(-2px);
+}
+
+/* ── Lists ──────────────────────────────────────────────────── */
+ul.clean, ul.dot { list-style: none; padding: 0; margin: 0 0 22px; }
+
+ul.clean li {
+    position: relative;
+    padding: 9px 0 9px 24px;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 15.5px;
+    line-height: 1.6;
+}
+ul.clean li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 18px;
+    width: 10px;
+    height: 1px;
+    background: var(--line-2);
+}
+ul.clean li:last-child { border-bottom: none; }
+
+ul.dot li {
+    position: relative;
+    padding: 5px 0 5px 20px;
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.62;
+}
+ul.dot li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 14px;
+    width: 4px;
+    height: 4px;
+    background: var(--line-2);
+    border-radius: 50%;
+}
+
+/* ── Pull quote ─────────────────────────────────────────────── */
+.pull-quote {
+    margin: 34px 0;
+    padding: 4px 0 4px 28px;
+    border-left: 1px solid var(--line-2);
+}
+.pull-quote p {
+    font-family: var(--display);
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.36;
+    letter-spacing: -0.008em;
+    color: var(--text);
+    margin: 0;
+}
+.pull-quote p strong { color: #FFF; font-weight: 400; }
+
+/* ── Outcomes: instrument readouts ──────────────────────────── */
+.outcomes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--line);
+    background: var(--surface);
+    margin: 32px 0 8px;
+}
+
+.outcome { padding: 24px 22px; border-right: 1px solid var(--line); }
+.outcome:last-child { border-right: none; }
+
+.outcome-num {
+    font-family: var(--mono);
+    font-size: 34px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    color: #FFF;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 12px;
+}
+
+.outcome-desc {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--faint);
+}
+
+/* ── Philosophy grid ────────────────────────────────────────── */
+.philosophy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+}
+
+.philosophy-item {
+    padding: 18px 20px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--muted);
+    transition: background 0.3s ease, color 0.3s ease;
+}
+.philosophy-item:hover { background: var(--surface); color: var(--text); }
+.philosophy-item--wide { grid-column: 1 / -1; }
+
+/* ── Capabilities ───────────────────────────────────────────── */
+.cap-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+}
+
+.cap-group { background: var(--bg); padding: 24px 22px; }
+
+.cap-group-title {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text);
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+}
+
+/* ── Leadership ─────────────────────────────────────────────── */
+.leadership-card {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 26px 24px;
+    margin-bottom: 16px;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+.leadership-card:hover { border-color: var(--line-2); background: var(--surface-2); }
+
+.lc-org {
+    font-size: 16px;
+    font-weight: 500;
+    color: #FFF;
+    letter-spacing: -0.005em;
+}
+
+.lc-role {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin: 7px 0 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.footer {
+    display: grid;
+    grid-template-columns: var(--rail) 1fr;
+    gap: 0 var(--gutter);
+    padding: 84px 0 0;
+}
+
+.footer-body { max-width: var(--measure); }
+
+.footer-cta {
+    font-family: var(--display);
+    font-size: clamp(30px, 4.6vw, 52px);
+    line-height: 1.08;
+    letter-spacing: -0.018em;
+    color: #FFF;
+    margin: -10px 0 26px;
+}
+.footer-cta em { color: var(--muted); font-style: normal; }
+
+.footer-text { color: var(--muted); margin: 0 0 36px; }
+
+.footer-contact {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 32px;
+    align-items: baseline;
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+}
+
+.footer-colophon {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+    margin-left: auto;
+}
+
+/* ── Writing index ──────────────────────────────────────────── */
+/* The left inset on .post-index / .article / .page-head keeps railless pages
+   sharing one content edge with .section and .footer. It lives in each padding
+   shorthand deliberately — a separate padding-left rule would be reset by it. */
+.post-index { padding: 20px 0 40px calc(var(--rail) + var(--gutter)); }
+
+.post-list { list-style: none; padding: 0; margin: 0; }
+
+.post-item { border-bottom: 1px solid var(--line); }
+
+.post-link {
+    display: grid;
+    grid-template-columns: 116px 1fr;
+    gap: 24px;
+    align-items: baseline;
+    padding: 26px 0;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+.post-link:hover { opacity: 1; }
+.post-link:hover .post-title { color: #FFF; }
+
+.post-date {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--faint);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.post-title {
+    font-family: var(--display);
+    font-size: clamp(20px, 2.6vw, 27px);
+    line-height: 1.25;
+    letter-spacing: -0.012em;
+    color: var(--text);
+    margin: 0 0 8px;
+    transition: color 0.3s ease;
+}
+
+.post-excerpt {
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--faint);
+    margin: 0;
+    max-width: var(--measure);
+}
+
+.empty-state {
+    padding: 48px 0;
+    color: var(--faint);
+    font-style: italic;
+}
+
+/* ── Article (post layout) ──────────────────────────────────── */
+.article {
+    padding: 72px 0 72px calc(var(--rail) + var(--gutter));
+    border-bottom: 1px solid var(--line);
+}
+
+.article-header {
+    max-width: var(--measure);
+    padding-bottom: 36px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+}
+
+.article-title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(34px, 5.4vw, 60px);
+    line-height: 1.06;
+    letter-spacing: -0.021em;
+    color: #FFF;
+    margin: 14px 0 20px;
+}
+
+.article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+}
+
+.prose { max-width: var(--measure); color: var(--muted); }
+
+.prose > * + * { margin-top: 22px; }
+
+.prose h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.2;
+    letter-spacing: -0.012em;
+    color: #FFF;
+    margin-top: 48px;
+}
+
+.prose h3 {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--text);
+    margin-top: 36px;
+}
+
+.prose a { color: var(--link); text-decoration: none; border-bottom: 1px solid var(--link-dim); }
+.prose a:hover { color: #FFF; border-bottom-color: #FFF; }
+
+.prose strong { color: var(--text); font-weight: 500; }
+
+.prose ul, .prose ol { padding-left: 20px; }
+.prose li { margin-bottom: 8px; }
+.prose li::marker { color: var(--faint); }
+
+.prose blockquote {
+    margin: 32px 0;
+    padding-left: 26px;
+    border-left: 1px solid var(--line-2);
+    font-family: var(--display);
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--text);
+}
+.prose blockquote p { margin: 0; }
+
+.prose code {
+    font-family: var(--mono);
+    font-size: 0.87em;
+    background: var(--surface-2);
+    border: 1px solid var(--line);
+    padding: 2px 6px;
+    color: var(--text);
+}
+
+.prose pre {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 20px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.65;
+}
+.prose pre code { background: none; border: none; padding: 0; }
+
+.prose hr { border: none; border-top: 1px solid var(--line); margin: 44px 0; }
+
+.prose img { max-width: 100%; height: auto; border: 1px solid var(--line); }
+
+.article-nav { padding: 40px 0 0; }
+
+/* ── Page intro (writing index header) ──────────────────────── */
+.page-head {
+    padding: 84px 0 48px calc(var(--rail) + var(--gutter));
+    border-bottom: 1px solid var(--line);
+}
+
+.page-title {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(40px, 6.4vw, 76px);
+    line-height: 1;
+    letter-spacing: -0.022em;
+    color: #FFF;
+    margin: 16px 0 20px;
+}
+
+.page-lede {
+    max-width: 52ch;
+    color: var(--muted);
+    margin: 0;
+}
+
+/* ── Motion ─────────────────────────────────────────────────── */
+@keyframes rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+}
+
+.reveal {
+    opacity: 0;
+    animation: rise 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.reveal:nth-child(1) { animation-delay: 0.05s; }
+.reveal:nth-child(2) { animation-delay: 0.14s; }
+.reveal:nth-child(3) { animation-delay: 0.23s; }
+
+/* Scroll-linked reveal for sections, progressively enhanced so
+   browsers without view timelines simply render them visible. */
+@supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+        .section, .footer, .post-item {
+            animation: rise linear both;
+            animation-timeline: view();
+            animation-range: entry 5% cover 22%;
+        }
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+    .reveal { opacity: 1; }
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    :root { --rail: 0px; --gutter: 28px; }
+
+    .sheet { padding-bottom: 100px; border-left: none; border-right: none; }
+
+    .hero { grid-template-columns: 1fr; }
+    .hero-text { padding: 56px 0 40px; order: 2; }
+    .hero-photo {
+        border-left: none;
+        border-bottom: 1px solid var(--line);
+        order: 1;
+    }
+    .hero-photo img { min-height: 300px; object-position: center 15%; }
+
+    .section, .footer { grid-template-columns: 1fr; gap: 0; padding: 56px 0; }
+    .page-head, .post-index, .article { padding-left: 0; }
+
+    .section-rail { margin-bottom: 22px; }
+    .section-num { position: static; }
+    .section-num::after { display: none; }
+
+    .outcomes, .cap-grid { grid-template-columns: 1fr; }
+    .outcome { border-right: none; border-bottom: 1px solid var(--line); }
+    .outcome:last-child { border-bottom: none; }
+
+    .post-link { grid-template-columns: 1fr; gap: 10px; }
+}
+
+@media (max-width: 620px) {
+    body { font-size: 16px; }
+
+    .hero-meta, .philosophy-grid { grid-template-columns: 1fr; }
+    .meta-cell:nth-child(odd) { border-right: none; padding-right: 0; }
+    .meta-cell:nth-child(even) { padding-left: 0; }
+    .philosophy-item { border-left: none; }
+    .philosophy-grid { border-left: none; }
+
+    .topbar { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .footer-colophon { margin-left: 0; }
+}

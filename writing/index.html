@@ -1,0 +1,32 @@
+---
+layout: default
+title: Writing
+description: Notes on enterprise architecture, platform modernisation, cloud economics and AI-augmented engineering.
+permalink: /writing/
+---
+
+<div class="page-head">
+  <span class="label">Index</span>
+  <h1 class="page-title">Writing</h1>
+  <p class="page-lede">Notes on enterprise architecture, platform modernisation, cloud economics, and AI-augmented engineering &mdash; written from inside the work.</p>
+</div>
+
+<div class="post-index">
+  {%- if site.posts.size > 0 %}
+  <ul class="post-list">
+    {%- for post in site.posts %}
+    <li class="post-item">
+      <a class="post-link" href="{{ post.url | relative_url }}">
+        <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%d %b %Y" }}</time>
+        <div>
+          <h2 class="post-title">{{ post.title }}</h2>
+          <p class="post-excerpt">{{ post.description | default: post.excerpt | strip_html | truncate: 180 }}</p>
+        </div>
+      </a>
+    </li>
+    {%- endfor %}
+  </ul>
+  {%- else %}
+  <p class="empty-state">Nothing published yet.</p>
+  {%- endif %}
+</div>

@@ -1,0 +1,41 @@
+title: Karuppuswamy Kumaresan
+tagline: Principal Consultant — Enterprise Cloud & AI Platforms
+description: >-
+  Principal Consultant, Enterprise Cloud & AI Platforms. Architecture,
+  product strategy, UX systems and scalable infrastructure advisory.
+url: "https://kkumaresan.com"
+baseurl: ""
+lang: en
+
+author:
+  name: Karuppuswamy Kumaresan
+  email: im@kkumaresan.com
+
+# Content
+markdown: kramdown
+permalink: /writing/:title/
+timezone: Asia/Kolkata
+excerpt_separator: "<!--more-->"
+
+# Plugins (all supported by GitHub Pages' native build)
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+feed:
+  path: /feed.xml
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - CLAUDE.md
+  - README.md
