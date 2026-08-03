@@ -1,8 +1,9 @@
 title: Karuppuswamy Kumaresan
-tagline: Principal Consultant — Enterprise Cloud & AI Platforms
+tagline: Principal Architect — Solution & Enterprise Architecture, Cloud Platform Strategy & AI Enablement
 description: >-
-  Principal Consultant, Enterprise Cloud & AI Platforms. Architecture,
-  product strategy, UX systems and scalable infrastructure advisory.
+  Principal Architect with 22+ years translating business strategy into
+  platform architecture — legacy modernization, cloud economics, AI
+  enablement and architecture governance across enterprise SaaS.
 url: "https://kkumaresan.com"
 baseurl: ""
 lang: en
@@ -10,6 +11,14 @@ lang: en
 author:
   name: Karuppuswamy Kumaresan
   email: im@kkumaresan.com
+  linkedin: "https://www.linkedin.com/in/kkumaresantech/"
+
+# jekyll-seo-tag emits these as schema.org `sameAs`, tying the site and
+# the LinkedIn profile to one identity for search engines.
+social:
+  name: Karuppuswamy Kumaresan
+  links:
+    - "https://www.linkedin.com/in/kkumaresantech/"
 
 # Content
 markdown: kramdown
