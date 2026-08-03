@@ -5,8 +5,6 @@ date: 2026-08-03
 tags: [architecture, finops]
 ---
 
-> This is a scaffold post created during the v2 build — replace or delete it.
-
 Most organisations track architecture debt as a backlog: a list of deferred
 refactors, each with a rough estimate, each perpetually outranked by feature
 work. The framing guarantees the outcome. A backlog item competes for capacity.
