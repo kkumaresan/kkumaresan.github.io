@@ -1,0 +1,50 @@
+title: Karuppuswamy Kumaresan
+tagline: Principal Architect — Solution & Enterprise Architecture, Cloud Platform Strategy & AI Enablement
+description: >-
+  Principal Architect with 22+ years translating business strategy into
+  platform architecture — legacy modernization, cloud economics, AI
+  enablement and architecture governance across enterprise SaaS.
+url: "https://kkumaresan.com"
+baseurl: ""
+lang: en
+
+author:
+  name: Karuppuswamy Kumaresan
+  email: im@kkumaresan.com
+  linkedin: "https://www.linkedin.com/in/kkumaresantech/"
+
+# jekyll-seo-tag emits these as schema.org `sameAs`, tying the site and
+# the LinkedIn profile to one identity for search engines.
+social:
+  name: Karuppuswamy Kumaresan
+  links:
+    - "https://www.linkedin.com/in/kkumaresantech/"
+
+# Content
+markdown: kramdown
+permalink: /writing/:title/
+timezone: Asia/Kolkata
+excerpt_separator: "<!--more-->"
+
+# Plugins (all supported by GitHub Pages' native build)
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+feed:
+  path: /feed.xml
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - CLAUDE.md
+  - README.md

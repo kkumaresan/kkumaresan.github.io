@@ -2,7 +2,6 @@
 .*
 !.git*
 !.editorconfig
-!.nojekyll
 !.travis.yml
 !.husky
 !.commitlintrc.json
@@ -18,3 +17,6 @@ vendor
 # npm dependencies
 node_modules
 package-lock.json
+
+# resume — kept local, not published
+*_Resume_*.pdf
