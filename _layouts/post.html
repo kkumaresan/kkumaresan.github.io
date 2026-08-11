@@ -11,6 +11,12 @@ layout: default
       <span>{{ content | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
     </div>
 
+    {%- if page.series %}
+    <p class="label article-series">
+      {{ page.series }}{% if page.part %} &mdash; Part {{ page.part }}{% endif %}
+    </p>
+    {%- endif %}
+
     <h1 class="article-title">{{ page.title }}</h1>
 
     {%- if page.description %}

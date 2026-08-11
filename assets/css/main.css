@@ -836,6 +836,10 @@ ul.dot li::before {
     color: var(--faint);
 }
 
+/* Series line sits between the meta row and the title, so a reader landing
+   mid-series knows it before they read the headline. */
+.article-series { margin: 24px 0 0; color: var(--text); }
+
 .prose { max-width: var(--measure); color: var(--muted); }
 
 .prose > * + * { margin-top: 22px; }
@@ -900,6 +904,25 @@ ul.dot li::before {
 .prose hr { border: none; border-top: 1px solid var(--line); margin: 44px 0; }
 
 .prose img { max-width: 100%; height: auto; border: 1px solid var(--line); }
+
+.prose figure { margin: 36px 0; }
+.prose figure img { display: block; width: 100%; }
+
+/* Diagrams are read, not glanced at. A wide figure reclaims the empty rail
+   inset the article is pushed off by, which is the only slack on the page —
+   the sheet's own edge is the hard stop. */
+.prose .figure-wide {
+    margin-left: calc(-1 * (var(--rail) + var(--gutter)));
+    width: calc(100% + var(--rail) + var(--gutter));
+}
+
+.prose figcaption {
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--faint);
+}
 
 .article-nav { padding: 40px 0 0; }
 
@@ -998,6 +1021,14 @@ ul.dot li::before {
     .figure:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
 
     .post-link { grid-template-columns: 1fr; gap: 10px; }
+
+    /* No rail left to reclaim — bleed into the sheet's own padding instead,
+       which lands exactly on the viewport edge once the measure is the
+       constraint. */
+    .prose .figure-wide {
+        margin-inline: calc(-1 * var(--gutter));
+        width: calc(100% + 2 * var(--gutter));
+    }
 }
 
 @media (max-width: 620px) {
