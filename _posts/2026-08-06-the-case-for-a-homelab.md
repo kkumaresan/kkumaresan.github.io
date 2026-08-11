@@ -3,6 +3,8 @@ title: "The Case for a Homelab"
 description: Dual-WAN failover, filtered DNS, and an automation stack that rebuilds from one script. Why production discipline belongs at home, and in small offices.
 date: 2026-08-06
 tags: [homelab, architecture, security]
+series: The Case for a Homelab
+part: 1
 ---
 
 My home network runs two fibre connections from competing ISPs, load-balanced

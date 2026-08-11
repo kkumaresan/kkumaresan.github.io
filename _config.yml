@@ -48,3 +48,6 @@ exclude:
   - vendor
   - CLAUDE.md
   - README.md
+  # Source material for posts. Front-mattered drafts in here would otherwise
+  # be built as pages and land in the sitemap as duplicates of the real post.
+  - ref
