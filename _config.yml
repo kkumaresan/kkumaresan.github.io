@@ -51,3 +51,8 @@ exclude:
   # Source material for posts. Front-mattered drafts in here would otherwise
   # be built as pages and land in the sitemap as duplicates of the real post.
   - ref
+  # Claude/agent tooling. .claude/skills/* are symlinks into .agents/skills/*,
+  # which made the listen watcher report "directory is already being watched"
+  # during jekyll serve. Not site content; keep both out of _site.
+  - .agents
+  - .claude
