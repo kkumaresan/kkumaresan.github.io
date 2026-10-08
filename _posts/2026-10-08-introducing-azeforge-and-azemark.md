@@ -3,7 +3,7 @@ title: "Introducing AzeForge and AzeMark: one source, four publishing formats"
 description: "I built AzeMark for readable technical documents and AzeForge to compile them into self-contained HTML, SVG, PNG, and PDF. Here is how to write a first document and try the tools."
 date: 2026-10-08
 tags: [azeforge, azemark, technical-writing, open-source]
-image: /assets/img/azeforge-linkedin-card.png
+image: /assets/img/azeforge-post-01.png
 ---
 
 Last week I published [@aruzone/aze-forge](https://www.npmjs.com/package/@aruzone/aze-forge), together with AzeMark, a readable technical document language I wrote. Both are open source under the [MIT License](https://github.com/aruzone/aze-forge/blob/main/LICENSE).
@@ -15,7 +15,7 @@ The idea is straightforward. Write the explanation, equations, diagrams, and dat
 <!--more-->
 
 <figure class="figure-wide">
-  <img src="{{ '/assets/img/azeforge-linkedin-card.png' | relative_url }}" alt="AzeForge launch artwork with its red logo and HTML, SVG, PNG, and PDF output formats" width="1200" height="627">
+  <img src="{{ '/assets/img/azeforge-post-01.png' | relative_url }}" alt="AzeForge artwork with its red logo, mathematical notes, chemistry and circuit diagrams, and a source editor beside a rendered preview" width="1672" height="941">
   <figcaption>AzeMark source becomes a self-contained artifact for the web, an image, or print.</figcaption>
 </figure>
 
